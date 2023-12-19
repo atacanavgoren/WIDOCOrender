@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WIDOCO Tutorial</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v0.4.1/dist/bootstrap-toc.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v0.4.1/dist/bootstrap-toc.min.js"></script>
+  </head>
+  <style>
+body, html {
+    height: 100%;
+    line-height: 1.8;
+   /* background: #edf5fa;*/
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+nav[data-toggle='toc'] {
+  margin-top: 100px;
+  position: fixed;
+  width:20%;
+}
+
+/* small screens */
+@media (max-width: 768px) {
+  /* override the Affix plugin so that the navigation isn't sticky */
+  nav.affix[data-toggle='toc'] {
+    position: static;
+    width:100%;
+  }
+
+  /* don't expand nested items, which pushes down the rest of the page when navigating */
+  nav[data-toggle='toc'] .nav .active .nav {
+    display: none;
+  }
+}
+.affix {
+    position: fixed;    
+}
+</style>
+  <body data-spy="scroll" data-target="#toc">
+
+<!-- add after bootstrap.min.js -->
+    <div class="container">
+    <div class="row">
+      <!-- sidebar, which will move to the top on a small screen -->
+      <div class="col-sm-3">
+        <nav id="toc" data-spy="affix" data-toggle="toc"></nav>
+      </div>
+
+      <div class="col-sm-9">
+          <h1 data-toc-text="WIDOCO" id="widoco_intro">WIDOCO: A WIzard for DOCumenting Ontologies</h1>
+          <p>
+           WIDOCO helps you publish and create an enriched and customized documentation of your ontology, by following a series of steps in a wizard or through the command line. In this tutorial you will learn how to use WIDOCO and all of its functionalities.
+          </p>
+          
+          <h1 data-toc-text="1. Download" id="download">1: Download WIDOCO</h1>
+            <p>
+            The easiest way of obtaining  WIDOCO is to download one of its released JARs. You can obtain them in the <a href="https://github.com/dgarijo/Widoco/releases">release page</a> of the project. I recommend downloading the latest release.
+            </p>
+          <!-- Here will go other features like generating landing pages -->
+          
+          <h1 data-toc-text="2. Project setup" id="setUp">2: Setting up your project</h1>      
+            <p>When you double click on a WIDOCO executable, you will see a window such as the one in the image below (without the red numbers):</p>
+             <div class="row">
+                <img src="images/step1.png" width="70%"></img>
+             </div>
+            <p>
+            Before doing anything else, it is advisable that you select where do you want to save your project outcomes. You can do this by writing your project name (by default it is "myDocumentation") in the "Project name" field on the bottom (red number 4 in the image). You can also change the folder where your project will be saved by clicking on the "Browse" button next to the previous field. This will change the "Project export location" path below the project name field.
+            </p>
+            <p>
+            At this point, you have two options:
+            </p>
+            
+            <h2 id="selectOntology">2.1. Select the target ontology </h2>
+            <p>
+            If you have your ontology saved as a file in your computer, click on "create template documentation from ontology file" (red number 1 in the image above) and select the file within your system. By default, WIDOCO will look for ontology files saved as .rdf, .xml, .ttl or .owl. If you have saved the ontology in another format (e.g., .txt) then select the option "All files" in the "Files of type" option of the file chooser window.
+            </p>
+            <p>
+            If your file is available on the web under a URI, then click on "create template documentation from ontology file" (red number 2 in the image) and add the ontology URI. You don't need to worry about redirections or content negotiation, as WIDOCO will handle the ontology appropriately and will download it.  
+            </p>
+            <p>
+            Click on "Next" to continue to the <a href="#metadata">next step</a> (Section 3).
+            </p>
+            
+            <h2 id="skeleton">2.2. Generate an empty skeleton</h2>
+            <p>
+            If you are just interested in generating an empty skeleton for your documentation, then click on "Create empty skeleton" (red number 3). This will produce a skeleton documentation with default metadata, but will not generate a cross reference section with the terms of any ontology. The figure below shows an example of an empty skeleton:
+            </p>
+            <div class="row">
+                <img src="images/skeleton.png" width="50%"></img>
+             </div>
+            
+          <h1 data-toc-text="3. Ontology metadata and language" id="metadata">3: Loading Ontology Metadata and selecting Language</h1>
+            <p>The next step in the ontology documentation is selecting the right metadata. This step is very important, as it will be the first thing anyone sees when browsing your ontology documentation.</p>
+             <div class="row" id="step2">
+                <img src="images/step2.png" width="70%"></img>
+             </div>
+             <br/>
+            <p> 
+                This step presents several options, further described below. Once you think you have described your ontology enough, press the "Next" button.
+            </p>
+            
+            <h2 id="loadMetadataFromOntology">3.1 Load metadata from the ontology itself</h2>
+            <p>
+            By default, WIDOCO will attempt to explore your ontology and browse its metadata. If you have declared any metadata properties, WIDOCO will likely recognize them. See <a href="http://w3id.org/widoco/bestPractices">our best practice document</a> (available in number 8 in red) to better understand which metadata properties are recognize by  WIDOCO. 
+            </p>
+            <p>
+            Annotating your ontology is very simple. For example, if you want to annotate who has created your ontology, you may use the property "creator" from the <a href="http://purl.org/dc/terms/creator">Dublin Core vocabulary</a>. In order to add the annotation to your ontology, just do something like:
+            </p>
+            <pre>
+&lt;YOUR ONTOLOGY URI&gt; rdf:type owl:Ontology ;
+      &lt;http://purl.org/dc/terms/creator&gt; "John Doe"^^xsd:string.
+            </pre>
+            <p>
+            As seen in the figure above, all the metadata found by WIDOCO will be loaded on the table shown in the GUI (number 4 in red). You may then complete any of the fields by just clicking and typing. Remember to press "enter" after finishing writing, otherwise your metadata won't be saved.
+            </p>
+            <h2 id="config">3.2 Use a configuration file</h2>
+            <p>
+            If you click on the "Load from config file..." option (number 2 in red in the figure), you will see a menu to select a property file with the metadata fields you want to load. This is convenient when you haven't annotated your ontology with metadata properties. 
+            </p>
+            <p>
+            A sample property file can be found in the following <a href="config.properties">link</a>. If you want to give it a try, just download it, edit it and try it on WIDOCO.
+            </p>
+            <p>
+            Note that when you load a property file, it will overwrite any properties loaded from the ontology automatically before.
+            </p>
+            <p>
+            You can edit all values for properties shown in the table (highlited by <a href="#step2">number 4 in red in the figure</a>). Once you are done, you can save everything by pressing the "Save as config file" button (number 3 in red). As a result, a new .properties file will be saved in your computer in the location where you choose to.
+            </p>
+            
+            <h2 id="languages">3.3 Generating Documentation in Several Languages</h2>
+            
+            <p>
+            WIDOCO can be configured to generate documentation in different languages. By default, it will just generate it in English (<a href="#step2">see default selected language in 1</a>). In order to generate documentation in different languages, you have to follow the steps below:
+            </p>
+            <ol>
+                <li>Click on "Add language ..." (number 5 in the figure). You will see the following menu:</li>
+                    <div class="row" id="step2">
+                        <img src="images/language.png" width="20%"></img>
+                     </div>
+                <li>Select any of the supported languages you want to generate the documentation in. Note that if a language is not supported, the titles of the sections of the document will be in English. Similarly, if you select a language but the ontology does not have labels for it, it will show them in whatever language is the default (English, most likely).</li>
+                <li>Click on "Done"</li>
+            </ol>
+            <p>
+                As a result, you should see on the interface the selected languages as in the image below: 
+            </p>
+            <div class="row" id="step2">
+                <img src="images/langGeneration.png" width="50%"></img>
+             </div>
+             
+             <p>
+             WIDOCO generates a documentation for each language, and it will prompt each time whether you want to edit the loaded metadata or not. The language for which the documentation is being generated is shown on top, highlighted with <a href="#step2">number 1</a> in red.
+             </p>
+            
+            <h2 id="licensius">3.4 Autocompleting License Metadata</h2>
+            <p>If you have included a license in your metadata but WIDOCO has not recognized it yet, you may try to use this feature (<a href="#step2">number 6</a> in red). When you click on the "Use Licensius WS" box, WIDOCO will invoke the <a href="http://www.licensius.com/">Licensius</a> web service to try and find any license metadata. If found, your license URL and name will be completed in the metadata table.  </p>
+            
+            
+          <h1 data-toc-text="4. Configuring your Documentation" id="configDocumentation">4: Setting up Documentation Options</h1>
+          
+              <p>
+              After clicking on "Next", you will see the final configuration window for WIDOCO: 
+              </p>
+          
+            <div class="row" id="step3">
+                <img src="images/step3.png" width="70%"></img>
+             </div>
+             
+             <p>
+             A description of the options is listed below. Once you are done with your selection, click on the "Generate!" button to produce your documentation. 
+             </p>
+             
+            <h2 id="sections">4.1 Selecting Documentation Sections</h2>
+                <p>
+                    You can configure which sections you want to include in your document by clicking on the check boxes shown in the figure above (red number 1). You may also load your own HTML if you prefer, by clicking on the "Load..." button that appears next to each section. Don't worry about the styles! Everything will be formatted with a consistent layout.
+                </p>
+                <p>
+                    The sections to include (abstract, introduction, overview, description and references) will include a placeholder text that you can later edit easily. The "Include annotation properties" option, however, will search your ontology for any metadata annotation properties that may  have been defined; and the "include named individuals" option will list in the documentation any named individual found. This is  particularly useful when you have a few individuals as examples of your ontology terms. However, <strong>I discourage choosing this option when a high number of individuals is present in the ontology</strong>, as the resultant HTML would be too big.
+                </p>
+                
+            <h2 id="provenance">4.2 Documentation Provenance</h2>
+                <p>
+                    <a href="https://www.w3.org/TR/prov-dm/#dfn-provenance">Provenance</a> is a record of how a resource was produced. When you select this option in the interface, WIDOCO lists who have been responsible for the creation of the documentation of your ontology (together with a few other details such as the license, creation date, etc.). By default, WIDOCO will take the authors and contributors of the ontology as responsible agents for the document. An additional document with an RDF representation of the provenance record will also be exported.
+                </p>
+                
+            <h2 id="negotiation">4.3 Content Negotiation</h2>
+                <p>
+                    If you plan to publish an ontology in your own server, you should select the "Create an .htaccess file" option. Content negotiation enables serving multiple serializations of a resource (in this case, your ontology) depending of what is requested. For example, imagine that you want to access the documentation of your ontology from a browser. Since you are a person, you are expecting to see something that you can read about your ontology, like the HTML documentation. However, if the request is issued by a program, such as Prot&eacute;g&eacute;, a machine readable representation like RDF/XML or JSON-LD will be preferred.
+                </p>
+                <p>
+                    WIDOCO follows the <a href="https://www.w3.org/TR/swbp-vocab-pub/">W3C Best practices for publishing RDF vocabularies</a>, and will prepare the .htaccess file assuming that the current project folder will be deployed on the root folder of your server. However, you can edit the base path by clicking on the "Set base path" option. For more information on how to prepare .htaccess files and their rules for serving content, I recommend having a look at the <a href="https://httpd.apache.org/docs/2.4/rewrite/intro.html">Apache mod rewrite documentation</a>.
+                </p>
+            <h2 id="visualization">4.4 Visualization</h2>
+                <p>
+                    WIDOCO is integrated with <a href="http://vowl.visualdataweb.org/webvowl.html">WebVowl</a>, a program designed to visualize ontologies. By selecting the option "Add link to WebVowl visualization", WIDOCO will generate and save a diagram of your ontology. An example can be seen in the figure below
+                </p>
+                <div class="row">
+                    <img src="images/webvowl.png" width="100%"></img>
+                 </div>
+            <h2 id="changelog">4.5 Generating an automated Changelog</h2>
+                <p>If you select the "Include a change log from last version", WIDOCO will generate a section at the end of the document describing the differences between the current version and the previous one. In order for WIDOCO to be able to generate this changelog, <strong>the previous version has to be annotated in the ontology metadata</strong> using any of the properties listed on the <a href="http://dgarijo.github.io/Widoco/doc/bestPractices/index-en.html#previousVersion"> best practices document</a> (for example, owl:priorVersion).</p>
+                
+                <p>WIDOCO extends <a href="https://www.ebi.ac.uk/efo/bubastis/">Bubastis</a>, a software generated for creating ontology differences in a human readable manner. An example of a resulting changelog can be seen below:</p>
+                
+                <div class="row">
+                    <img src="images/changelog.png" width="100%"></img>
+                 </div>
+             
+            <h2 id="style">4.6 Changing default documentation style</h2>
+                <p>
+                    You can customize the style in which WIDOCO displays the documentation by editing the CSS included in the main folder. However, one of WIDOCO's users contributed a new stylem used in the <a href="http://datos.bne.es/def/ontology.html">BNE ontology</a>. If you like it, just select the "Custom" style option.
+                </p>
+            <h2 id="analytics">4.7 Documentation Analytics</h2>
+                <p>
+                    <a href="https://analytics.google.com/">Google analytics</a> is used by many researchers and institutions to measure who accesses your web pages. If you have a code for tracking your website, WIDOCO will include a javascript snippet in the documentation to start tracking your ontology traffic.
+                </p>
+            
+          <h1 id="viewAndEvaluation">5. View, Explore and Evaluate your Documentation</h1>
+                <p>
+                After clicking "Generate!" on the previous step, you will see the following image:
+                </p>
+                
+                <div class="row">
+                    <img src="images/step4.png" width="60%"></img>
+                 </div>
+                <p>
+                Congratulations! Your documentation has been successfully generated. If you click on "View the ontology documentation in your web browser" (number 1 in red in the figure), the resultant documentation will be opened in a new window. <strong>If you use Chrome, you may not see the sections of the document</strong>. Don't panic! Sometimes when browsing your ontology in your local computer, the browser deactivates loading local content. You may use another browser to see the content locally, or adopt any of the solutions listed on the <a href="https://github.com/dgarijo/Widoco/#browser-issues">WIDOCO readme file</a>. In any case, there should not be an issue when serving the contents from a server.
+                </p>
+                
+            <h2 id="evaluation">5.1 Creating an evaluation of your ontology</h2>
+                <p>
+                Now that you are done with the documentation, you may get an <a href="http://oops.linkeddata.es/">OOPS!</a> evaluation report by clicking "Validate your ontology with OOPS!" (number 2 in red in the figure above). The report will show potential design pitfalls of your ontology and will be saved in the project folder as an HTML file. If no pitfalls are found, OOPS! will return a page similar to the image below:
+                </p>
+                
+                <div class="row">
+                    <img src="images/oops.png" width="70%"></img>
+                 </div>
+            <h2 id="results">5.2 Exploring generated resources</h2>
+                <p>
+                    After generating your ontology documentation, your project folder will look very similar to the following image:
+                </p>
+                <div class="row">
+                    <img src="images/resources.png" width="70%"></img>
+                </div>
+                 
+                <p>Here is a description of each of them:</p>
+                <ul>
+                    <li>The folder "OOPSEvaluation" contains the resources produced by the OOPS! pitfall scanner (if selected)</li>
+                    <li>The folder "resources" contains the styles and javascript used in the documentation</li>
+                    <li>The folder "sections" contains the HTML used for each of the sections in the main document. This is separated for your convenience, as the cross-reference section (the one containing the description of the classes, properties and data properties of your ontology) is often too big to edit the rest of the HTML comfortably. This way you may also edit the introduction section once and refresh the just the cross-reference section when you change the main ontology.</li>
+                    <li>The folder "webvowl" contains the resources necessary to visualize the ontology.</li>
+                    <li>The .htaccess file contains the rules needed to do content negotiation of your ontology. I recommend double-checking this file in a local tomcat server before setting it up in production.</li>
+                    <li>The 406.html file is there to notify a user or computer program in case an unsupported serialization is requested.</li>
+                    <li>The index-en.html contains the metadata description of your ontology and assembles together all the sections for the document.</li>
+                    <li>The ontology.json, ontology.xml, ontology.nt and ontology.ttl are different serializations of your ontology to download.</li>
+                </ul>
+          
+          <h1 id="commandLine">6. WIDOCO through command line</h1>
+            <p>
+            WIDOCO can be executed from the command line in case you want to set it up in an automated manner in your workflow. All the flags that may be used for configuration (which are the same as the features descibed in this document) can be seen in detail in the <a href="https://github.com/dgarijo/Widoco/#how-to-use-widoco">"How to use WIDOCO" section of the readme file in the GitHub repository</a>.
+            </p>
+          
+          <p>
+          This tutorial has been written by Daniel Garijo.
+          </p>
+            
+      </div>
+    </div>
+    </div>
+</body>
+</html>
